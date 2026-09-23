@@ -1,0 +1,16 @@
+services:
+  api:
+    build: .
+    image: msg-spam
+    ports:
+      - "8000:8000"
+
+  frontend:
+    image: msg-spam
+    command: streamlit run frontend/app.py --server.address=0.0.0.0 --server.port=8501
+    environment:
+      - URL_API=http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api

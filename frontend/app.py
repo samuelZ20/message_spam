@@ -1,7 +1,9 @@
+import os
 import requests
 import streamlit as st
 
-URL_API = "http://127.0.0.1:8000"
+# No Docker a URL vem da variável de ambiente (http://api:8000)
+URL_API = os.getenv("URL_API", "http://127.0.0.1:8000")
 
 st.title("📩 Detector de SPAM")
 st.write("Digite uma mensagem (em inglês) e descubra se ela é spam.")

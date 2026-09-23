@@ -1,0 +1,13 @@
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+notebooks/
+models/
+.git/
+.vscode/
+.idea/
+.env
+*.log
