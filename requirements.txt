@@ -1,0 +1,13 @@
+# Dependências diretas do projeto (as transitivas são resolvidas pelo pip)
+pandas==3.0.5
+numpy==2.5.1
+scikit-learn==1.9.0
+nltk==3.10.3
+matplotlib==3.11.1
+seaborn==0.13.2
+wordcloud==1.9.6
+joblib==1.5.3
+
+# Rodar o notebook
+ipykernel==7.3.0
+nbconvert==7.17.1

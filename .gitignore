@@ -1,4 +1,4 @@
-# Virtual environment
+# Ambiente virtual
 venv/
 .venv/
 env/
@@ -8,21 +8,21 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Jupyter
+# Jupyter (checkpoints automáticos)
 .ipynb_checkpoints/
 
-# Environment variables
+# Variáveis de ambiente
 .env
 
-# IDEs
+# Configurações de IDEs
 .vscode/
 .idea/
 
-# OS
+# Arquivos do sistema operacional
 .DS_Store
 Thumbs.db
 
-# Build / distribution
+# Build / distribuição
 build/
 dist/
 *.egg-info/
@@ -30,6 +30,6 @@ dist/
 # Logs
 *.log
 
-# Machine Learning
+# Modelos de machine learning treinados
 models/*.pkl
 models/*.joblib
