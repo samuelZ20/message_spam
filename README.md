@@ -1,8 +1,41 @@
 # 📩 Detector de SPAM em SMS
 
+> 👋 **Sobre este projeto**
+>
+> Este é um projeto de estudos: estou começando minha jornada em **Machine Learning** e quis colocar em prática, de ponta a ponta, o que venho aprendendo. A ideia foi passar por todas as etapas de um projeto real, desde explorar e limpar os dados, testar vários modelos e escolher o melhor, até disponibilizar o resultado numa API e numa interface simples.
+>
+> Ainda há muito a melhorar, e sugestões e feedbacks são muito bem-vindos! 🚀
+
 Projeto de Machine Learning que classifica mensagens SMS (em inglês) como **spam** ou **ham** (mensagem legítima). Inclui análise exploratória, pipeline de treino, uma API REST com FastAPI e uma interface web com Streamlit.
 
-## Resultados
+## Modelos testados
+
+No notebook `notebooks/exploracao.ipynb`, os textos foram transformados em features **TF-IDF** (3000 termos) e 10 classificadores do scikit-learn foram comparados, com 80% dos dados para treino e 20% para teste:
+
+| Sigla    | Modelo                                   | Configuração                           |
+|----------|------------------------------------------|----------------------------------------|
+| SVC      | Support Vector Classifier                | `kernel="sigmoid"`, `gamma=1.0`        |
+| KNN      | K-Nearest Neighbors                      | padrão                                 |
+| NB       | Naive Bayes Multinomial                  | padrão                                 |
+| DT       | Árvore de Decisão                        | `max_depth=5`                          |
+| LR       | Regressão Logística                      | `solver="liblinear"`, `penalty="l1"`   |
+| RF       | Random Forest                            | `n_estimators=50`                      |
+| AdaBoost | AdaBoost                                 | `n_estimators=50`                      |
+| Bagging  | Bagging                                  | `n_estimators=50`                      |
+| ETC      | Extra Trees                              | `n_estimators=50`                      |
+| GBDT     | Gradient Boosting                        | `n_estimators=50`                      |
+
+As métricas usadas foram a **acurácia** (quanto o modelo acerta no geral) e a **precisão** (das mensagens marcadas como spam, quantas eram realmente spam). A precisão importa bastante aqui, porque marcar uma mensagem legítima como spam (falso positivo) é pior do que deixar passar um spam.
+
+## Conclusões
+
+- **SVC** e **Random Forest** tiveram as maiores acurácias (~97,58%).
+- **Naive Bayes** teve **precisão de 100%**: nenhuma mensagem legítima foi marcada como spam.
+- **Gradient Boosting**, **AdaBoost**, **Regressão Logística** e **Bagging** também foram bem, com acurácias entre 94,68% e 96,03%.
+- Na análise exploratória, as mensagens de spam são, em média, **bem mais longas** que as legítimas (~138 contra ~70 caracteres), e o dataset é **desbalanceado** (~87% ham e ~13% spam). Por isso só a acurácia não basta para avaliar os modelos.
+- O **SVC** foi escolhido para produção porque teve a melhor acurácia com uma precisão alta. Ele é treinado em `src/train.py`.
+
+### Resultado do modelo final
 
 Modelo: **SVC (kernel sigmoid)** sobre features **TF-IDF** (3000 termos), avaliado em 20% dos dados reservados para teste.
 
@@ -12,6 +45,8 @@ Modelo: **SVC (kernel sigmoid)** sobre features **TF-IDF** (3000 termos), avalia
 | Precisão  | 96,69% |
 
 As métricas são salvas em `models/metrics.json` a cada treino.
+
+> **Um aprendizado no caminho:** no notebook, o TF-IDF foi ajustado com o dataset inteiro antes de separar treino e teste, então informação do teste "vazava" para o treino (*data leakage*). No `src/train.py` isso foi corrigido: a separação acontece **antes**, e o vetorizador aprende o vocabulário só com os dados de treino.
 
 ## Estrutura do projeto
 
