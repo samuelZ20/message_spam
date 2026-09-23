@@ -11,3 +11,12 @@ joblib==1.5.3
 # Rodar o notebook
 ipykernel==7.3.0
 nbconvert==7.17.1
+
+# API
+fastapi==0.141.1
+pydantic==2.13.5
+uvicorn[standard]==0.53.0
+
+#request e streamlit
+requests==2.34.2
+streamlit==1.64.0
